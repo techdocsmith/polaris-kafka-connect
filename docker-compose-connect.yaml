@@ -1,0 +1,28 @@
+version: '3'
+services:
+   kafka-connect:
+    image: sfsmithcha/http-connect:latest
+    ports:
+       - 28082:28082
+       - 8083:8083
+    networks:
+      - my-network
+    environment:
+      CONNECT_BOOTSTRAP_SERVERS: kafka:9092
+      CONNECT_REST_PORT: 28082
+      CONNECT_GROUP_ID: polaris-connect
+      CONNECT_CONFIG_STORAGE_TOPIC: polaris-connect-config
+      CONNECT_OFFSET_STORAGE_TOPIC: polaris-connect-offsets
+      CONNECT_STATUS_STORAGE_TOPIC: polaris-connect-status
+      CONNECT_KEY_CONVERTER: org.apache.kafka.connect.storage.StringConverter
+      CONNECT_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONNECT_VALUE_CONVERTER_SCHEMAS_ENABLE: "false"
+      CONNECT_INTERNAL_KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONNECT_INTERNAL_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONNECT_REST_ADVERTISED_HOST_NAME: kafka
+      CONNECT_PLUGIN_PATH: /usr/share/java,/usr/share/java/connectors
+
+networks:
+  my-network:
+   name: polaris-connect
+      

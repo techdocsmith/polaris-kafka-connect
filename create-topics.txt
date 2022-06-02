@@ -1,0 +1,18 @@
+docker exec kafka \
+    kafka-topics --bootstrap-server kafka:29092 \
+    --create \
+    --topic polaris-connect-config \
+	--config cleanup.policy=compact
+
+
+docker exec kafka \
+    kafka-topics --bootstrap-server kafka:29092 \
+    --create \
+    --topic polaris-connect-offsets \
+    --config cleanup.policy=compact
+
+docker exec kafka \
+    kafka-topics --bootstrap-server kafka:29092 \
+    --create \
+    --topic polaris-connect-status \
+	--config cleanup.policy=compact
